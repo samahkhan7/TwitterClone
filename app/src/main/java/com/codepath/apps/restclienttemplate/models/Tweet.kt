@@ -30,4 +30,8 @@ class Tweet {
             return tweets
         }
     }
+
+        fun getFormattedTimestamp(): String? {
+            return TimeFormatter.getTimeDifference(createdAt)
+         }
 }

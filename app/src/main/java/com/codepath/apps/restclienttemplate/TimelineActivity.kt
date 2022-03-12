@@ -18,6 +18,7 @@ class TimelineActivity : AppCompatActivity() {
 
     lateinit var rvTweets : RecyclerView
     lateinit var adapter : TweetsAdapter
+
     val tweets = ArrayList<Tweet>()
 
     lateinit var swipeContainer: SwipeRefreshLayout
