@@ -50,16 +50,28 @@ class ComposeActivity : AppCompatActivity() {
                 val count = etCompose.text.toString()
                 //tvCounter.setText(s.toString())
 
-                //tvCounter.setText(s.length)
-
-                if(count.length > 280) {
+                // turns red if chars exceed 280 upper limit -> char count increases
+            /*    if(count.length > 280) {
                     tvCounter.setTextColor(Color.RED)
-
                 } else {
                     tvCounter.setTextColor(Color.BLACK)
                 }
                tvCounter.text = s.length.toString()
+             */
+
+                // turns red if chars reach 0 -> char count decreases
+                var maxChar = 280
+                if(count.length < maxChar) {
+                    tvCounter.setTextColor(Color.BLACK)
+                } else {
+                    tvCounter.setTextColor(Color.RED)
+                }
+                val currentChar = s.length.toInt()
+                tvCounter.text = (maxChar - currentChar).toString()
+
             }
+
+
         })
 
         // handling user's click on the tweet button
@@ -77,7 +89,7 @@ class ComposeActivity : AppCompatActivity() {
                 if (tweetContent.length > 280) {
                     Toast.makeText(
                         this,
-                        "Tweet is too long! Limit is 140 characters",
+                        "Tweet is too long! Limit is 280 characters",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
