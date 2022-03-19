@@ -1,14 +1,18 @@
 package com.codepath.apps.restclienttemplate
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.JsonReader
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
@@ -25,28 +29,38 @@ class ComposeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compose)
 
-        etCompose = findViewById<EditText>(R.id.etTweetCompose)
+        etCompose = findViewById(R.id.etTweetCompose)
         btnTweet = findViewById(R.id.btnTweet)
 
         client = TwitterApplication.getRestClient(this)
 
         // allow the user to see the character count as they compose a tweet
+        var tvCounter = findViewById<TextView>(R.id.tvCounter)
         etCompose.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // Fires right as the text is being changed (even supplies the range of text)
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // Fires right before text is changing
             }
 
-            override fun afterTextChanged(p0: Editable?) {
-                TODO("Not yet implemented")
-            }
+            override fun afterTextChanged(s: Editable) {
+                // Fires right after the text has changed
+                val count = etCompose.text.toString()
+                //tvCounter.setText(s.toString())
 
+                //tvCounter.setText(s.length)
+
+                if(count.length > 280) {
+                    tvCounter.setTextColor(Color.RED)
+
+                } else {
+                    tvCounter.setTextColor(Color.BLACK)
+                }
+               tvCounter.text = s.length.toString()
+            }
         })
-
-
 
         // handling user's click on the tweet button
         btnTweet.setOnClickListener {
@@ -60,7 +74,7 @@ class ComposeActivity : AppCompatActivity() {
                 // look into displaying snackbar message
             } else
             // 2. make sure the tweet doesn't exceed the character count
-                if (tweetContent.length > 140) {
+                if (tweetContent.length > 280) {
                     Toast.makeText(
                         this,
                         "Tweet is too long! Limit is 140 characters",
@@ -70,7 +84,7 @@ class ComposeActivity : AppCompatActivity() {
                     //Toast.makeText(this, tweetContent, Toast.LENGTH_SHORT).show()
 
                     // make an api call to twitter to publish the tweet
-                    client.publishTweet(tweetContent, object: JsonHttpResponseHandler() {
+                    client.publishTweet(tweetContent, object : JsonHttpResponseHandler() {
 
                         override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
                             Log.e(TAG, "Successfully published tweet!")

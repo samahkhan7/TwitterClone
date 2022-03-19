@@ -18,7 +18,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="5dp"
+        />
+
+    <TextView
+        android:id="@+id/tvCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTweet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTweetCompose" />
 
     <Button
         android:id="@+id/btnTweet"
@@ -27,5 +38,5 @@
         android:text="Tweet"
         android:layout_margin="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTweetCompose" />
+        app:layout_constraintTop_toBottomOf="@id/tvCounter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
