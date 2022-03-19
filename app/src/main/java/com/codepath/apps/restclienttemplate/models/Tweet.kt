@@ -1,13 +1,15 @@
 package com.codepath.apps.restclienttemplate.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
 
-class Tweet {
+@Parcelize
+// annotate the class with parcelize, move variables, add parcelable
 
-    var body: String = ""
-    var createdAt: String = ""
-    var user: User? = null
+class Tweet(var body: String = "", var createdAt: String = "", var user: User? = null) :
+    Parcelable {
 
     companion object {
         // pass in a json object and turn that into a tweet object we can use
